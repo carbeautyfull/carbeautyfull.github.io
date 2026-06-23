@@ -121,6 +121,163 @@
     .sticky-cta a{flex:1;text-align:center;}
     body{padding-bottom:64px;}
   }
+
+
+  /* ===== CARD ĐƠN GIẢN - CHỈ HIỆN TÊN ===== */
+  .card{cursor:pointer; border-radius:6px; background:#fff; border:1px solid var(--steel-100); transition:border-color .15s, box-shadow .15s, transform .15s;}
+  .card:hover{border-color:var(--safety); box-shadow:0 4px 16px rgba(255,90,31,0.10); transform:translateY(-2px);}
+  .card-body-simple{padding:16px 18px; display:flex; flex-direction:column; gap:10px;}
+  .card-stock-row{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .card-badge-inline{font-family:var(--font-mono);font-size:10px;letter-spacing:0.5px;padding:3px 8px;border-radius:3px;text-transform:uppercase;font-weight:600;}
+  .card-tap-hint{font-family:var(--font-mono);font-size:10px;color:var(--steel-300);}
+  .card:hover .card-tap-hint{color:var(--safety);}
+
+  /* ===== MODAL CHI TIẾT SẢN PHẨM ===== */
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(19,24,29,0.75);
+    z-index:500;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:#fff;
+    border-radius:10px;
+    max-width:560px;
+    width:100%;
+    max-height:90vh;
+    overflow-y:auto;
+    position:relative;
+    animation:modalIn .2s ease;
+  }
+  @keyframes modalIn{from{transform:translateY(20px);opacity:0;}to{transform:none;opacity:1;}}
+  .modal-close{
+    position:absolute;
+    top:14px;right:14px;
+    background:var(--steel-100);
+    border:none;
+    width:32px;height:32px;
+    border-radius:50%;
+    font-size:18px;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--steel-700);
+    z-index:10;
+    transition:background .15s;
+  }
+  .modal-close:hover{background:var(--steel-300);}
+  .modal-img{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    background:var(--steel-100);
+    border-radius:10px 10px 0 0;
+    display:block;
+  }
+  .modal-img-placeholder{
+    width:100%;
+    aspect-ratio:16/9;
+    background:var(--steel-100);
+    border-radius:10px 10px 0 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:48px;
+  }
+  .modal-body{padding:24px;}
+  .modal-cat{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--safety);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-bottom:8px;
+  }
+  .modal-name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:26px;
+    line-height:1.2;
+    color:var(--steel-900);
+    margin-bottom:12px;
+  }
+  .modal-desc{
+    font-size:14px;
+    color:var(--steel-500);
+    line-height:1.6;
+    margin-bottom:20px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--steel-100);
+  }
+  .modal-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:20px;
+  }
+  .modal-price{
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:22px;
+    color:var(--steel-900);
+  }
+  .modal-price small{font-weight:400;font-size:13px;color:var(--steel-500);}
+  .modal-stock-ok{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--ok);
+    font-weight:600;
+    display:flex;align-items:center;gap:5px;
+  }
+  .modal-stock-out{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--steel-500);
+    font-weight:600;
+  }
+  .modal-actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn-order-lg{
+    flex:1;
+    font-weight:600;
+    font-size:15px;
+    background:var(--safety);
+    color:#fff;
+    border:none;
+    padding:14px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    transition:background .15s;
+  }
+  .btn-order-lg:hover{background:var(--safety-dark);}
+  .btn-call-lg{
+    font-weight:600;
+    font-size:15px;
+    background:var(--steel-900);
+    color:#fff;
+    border:none;
+    padding:14px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:background .15s;
+  }
+  .btn-call-lg:hover{background:var(--steel-700);}
+  .card{cursor:pointer;}
+
 </style>
 </head>
 <body>
@@ -189,6 +346,25 @@
     <div>📞 0923.292.593<br>🕒 7:30 – 18:00, Thứ 2 – Thứ 7</div>
   </div>
 </footer>
+
+
+<!-- MODAL CHI TIẾT -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div id="modal-img-wrap"></div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modal-cat"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-meta">
+        <div class="modal-price" id="modal-price"></div>
+        <div id="modal-stock"></div>
+      </div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+</div>
 
 <div class="sticky-cta">
   <a href="https://zalo.me/0923292593" target="_blank" class="btn-primary">💬 Chat Zalo đặt hàng</a>
@@ -297,9 +473,9 @@ const SHOP_DATA = {
       "brand": "suzuki",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Suzuki, bảo vệ động cơ tối ưu."
+      "desc": "Dầu động cơ Suzuki ECSTAR 0W-20 tổng hợp hoàn toàn, được phát triển đặc biệt cho các dòng xe Suzuki thế hệ mới. Độ nhớt 0W-20 siêu thấp giúp khởi động dễ dàng trong thời tiết lạnh, giảm tiêu hao nhiên liệu và bảo vệ động cơ tối ưu. Đạt tiêu chuẩn API SN+, ILSAC GF-5."
     },
     {
       "id": "p002",
@@ -308,9 +484,9 @@ const SHOP_DATA = {
       "brand": "suzuki",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Suzuki, bảo vệ động cơ tối ưu."
+      "desc": "Dầu động cơ Suzuki ECSTAR 5W-30 tổng hợp, được thiết kế cho các dòng xe Suzuki động cơ xăng và diesel nhỏ. Bảo vệ động cơ toàn diện, giảm ma sát, tiết kiệm nhiên liệu. Phù hợp với Suzuki Swift, Ertiga, Ciaz. Đạt tiêu chuẩn API SN."
     },
     {
       "id": "p003",
@@ -319,9 +495,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Toyota, phù hợp xe Toyota, bảo vệ động cơ lâu dài."
+      "desc": "Dầu động cơ Toyota chính hãng dành riêng cho máy xăng, được Toyota Nhật Bản phát triển và kiểm nghiệm trực tiếp trên các dòng xe Toyota. Bảo vệ tối ưu chi tiết động cơ, chống oxy hóa, kéo dài tuổi thọ động cơ. Phù hợp Vios, Camry, Fortuner, Innova máy xăng."
     },
     {
       "id": "p004",
@@ -330,9 +506,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Hyundai độ nhớt 15W40, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Dầu động cơ Hyundai chính hãng độ nhớt 15W-40, phù hợp cho khí hậu nhiệt đới Việt Nam. Bảo vệ động cơ hiệu quả trong điều kiện nhiệt độ cao, chống mài mòn vượt trội. Phù hợp Hyundai i10, Accent, Elantra sử dụng dầu khoáng."
     },
     {
       "id": "p005",
@@ -341,9 +517,9 @@ const SHOP_DATA = {
       "brand": "mobil1",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Mobil 1 độ nhớt 0W40, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Mobil 1 European Car Formula 0W-40 là dầu tổng hợp cao cấp dành cho xe châu Âu. Công nghệ SuperSyn™ cho khả năng bảo vệ vượt trội ngay từ lần khởi động đầu tiên. Đạt chuẩn Mercedes-Benz 229.5, Porsche A40, VW 502.00/505.00. Hoạt động tối ưu ở cả nhiệt độ thấp lẫn cao."
     },
     {
       "id": "p006",
@@ -352,9 +528,9 @@ const SHOP_DATA = {
       "brand": "mobil1",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Mobil 1 độ nhớt 0W40, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Mobil 1 0W-40 dầu tổng hợp toàn phần cao cấp, bảo vệ động cơ lên đến 15.000km/lần thay. Giảm thiểu ma sát nội tại, bảo tồn công suất động cơ, hoạt động hiệu quả trong điều kiện khắc nghiệt. Phù hợp nhiều dòng xe hiện đại đòi hỏi dầu hiệu suất cao."
     },
     {
       "id": "p007",
@@ -363,9 +539,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Hyundai độ nhớt 5W30, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Dầu động cơ Hyundai 5W-30 chuyên dụng cho máy dầu Diesel, được Hyundai Motor phát triển riêng cho các dòng xe diesel như Santa Fe, Tucson, Porter. Chống muội than, bảo vệ hệ thống phun nhiên liệu common rail, đáp ứng tiêu chuẩn Euro 4-5."
     },
     {
       "id": "p008",
@@ -374,9 +550,9 @@ const SHOP_DATA = {
       "brand": "castrol",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1589199492902-e247b7d79c7d?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Castrol độ nhớt 5W30, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Castrol EDGE 5W-30 với công nghệ Fluid Titanium độc quyền, tạo lớp màng bảo vệ vững chắc ngay cả khi động cơ hoạt động ở áp suất cao nhất. Giảm ma sát đến 15% so với dầu thông thường. Được BMW, VW và Mercedes-Benz khuyến nghị sử dụng."
     },
     {
       "id": "p009",
@@ -385,9 +561,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Honda độ nhớt 0W20, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Dầu động cơ Honda 0W-20 Ultra Leo tổng hợp hoàn toàn, được Honda Motor phát triển đặc biệt cho các dòng xe Honda thế hệ VTEC mới. Tiết kiệm nhiên liệu tối đa, bảo vệ động cơ i-VTEC, i-MMD. Phù hợp Honda City, Civic, HR-V, CR-V 2018 trở lên."
     },
     {
       "id": "p010",
@@ -396,9 +572,9 @@ const SHOP_DATA = {
       "brand": "mobil1",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Mobil 1 độ nhớt 5W30, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Mobil 1 ESP 5W-30 dầu tổng hợp toàn phần chuyên dụng cho xe có hệ thống xử lý khí thải (DPF/GPF). Công thức Low SAPS đặc biệt bảo vệ bộ lọc particulate, kéo dài tuổi thọ hệ thống xả. Đạt chuẩn BMW Longlife-04, MB 229.51, VW 504.00/507.00."
     },
     {
       "id": "p011",
@@ -407,9 +583,9 @@ const SHOP_DATA = {
       "brand": "suzuki",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Suzuki độ nhớt 10W40, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Dầu động cơ Suzuki ECSTAR 10W-40 bán tổng hợp, phù hợp cho các dòng xe Suzuki cũ hơn hoặc hoạt động trong điều kiện nặng. Bảo vệ động cơ toàn diện, chống mài mòn hiệu quả, ổn định độ nhớt ở nhiệt độ cao. Phù hợp Suzuki Alto, Grand Vitara đời cũ."
     },
     {
       "id": "p012",
@@ -418,9 +594,9 @@ const SHOP_DATA = {
       "brand": "motul",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Motul độ nhớt 10W40, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Motul 300V 10W-40 nhập khẩu Pháp - dầu đua tổng hợp ester hiệu suất cao nhất của Motul. Được phát triển từ công nghệ đua xe Le Mans, giảm nhiệt độ động cơ, tăng công suất và mô-men xoắn. Lý tưởng cho xe côn tay hiệu suất cao, thay mỗi 3.000-5.000km."
     },
     {
       "id": "p013",
@@ -429,9 +605,9 @@ const SHOP_DATA = {
       "brand": "motul",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Motul độ nhớt 10W50, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Motul 7100 4T 10W50 dầu tổng hợp ester 100% cho xe số và côn tay hiệu suất cao. Bảo vệ động cơ 4 thì tối đa, hỗ trợ sang số mượt mà, chịu nhiệt vượt trội. Được nhiều đội đua mô tô chuyên nghiệp tin dùng. Phù hợp Exciter, Winner, CBR 150-250."
     },
     {
       "id": "p014",
@@ -440,9 +616,9 @@ const SHOP_DATA = {
       "brand": "ipone",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Ipone, phù hợp xe Ipone, bảo vệ động cơ lâu dài."
+      "desc": "IPONE Full Power Katana 4T 1L - dầu tổng hợp 100% ester cao cấp từ Pháp cho xe mô tô 4 thì. Công thức đặc biệt tối ưu hóa hiệu suất động cơ, bảo vệ ly hợp ướt, giảm tiêu thụ nhiên liệu. Đạt chuẩn JASO MA2, API SN. Phù hợp mọi dòng xe số và côn tay."
     },
     {
       "id": "p015",
@@ -451,9 +627,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Toyota, phù hợp xe Toyota, bảo vệ động cơ lâu dài."
+      "desc": "Dầu động cơ Toyota chính hãng dành riêng cho máy dầu Diesel, phát triển đặc biệt cho Fortuner, Innova, Hilux động cơ diesel. Chống muội than, bảo vệ hệ thống common rail, phù hợp tiêu chuẩn Euro 4. Kéo dài chu kỳ thay dầu lên đến 10.000km."
     },
     {
       "id": "p016",
@@ -462,9 +638,9 @@ const SHOP_DATA = {
       "brand": "total",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Total độ nhớt 5W30, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Total Quartz 9000 5W-30 tổng hợp hoàn toàn, được Total Pháp phát triển với công nghệ Age Resistance Technology. Chống lão hóa dầu, duy trì hiệu suất bôi trơn xuyên suốt chu kỳ thay dầu. Phù hợp xe Peugeot, Citroen và nhiều dòng xe châu Âu khác."
     },
     {
       "id": "p017",
@@ -473,9 +649,9 @@ const SHOP_DATA = {
       "brand": "total",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Total độ nhớt 0W20, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Total Quartz INEO ECS 0W-20 tổng hợp cao cấp, tiết kiệm nhiên liệu tối đa với công nghệ Low Friction. Bảo vệ bộ lọc xúc tác và DPF, tuân thủ các tiêu chuẩn khí thải nghiêm ngặt nhất. Phù hợp xe Toyota, Honda, Mazda đòi hỏi dầu 0W-20."
     },
     {
       "id": "p018",
@@ -484,9 +660,9 @@ const SHOP_DATA = {
       "brand": "total",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Total độ nhớt 10W40, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "Total Quartz 7000 10W-40 bán tổng hợp, lý tưởng cho xe hoạt động nhiều năm hoặc điều kiện đường xấu. Bảo vệ tốt trong điều kiện nhiệt đới, chống oxy hóa, giảm tiêu hao dầu. Phù hợp nhiều dòng xe phổ thông Nhật và Hàn đời 2010 trở về trước."
     },
     {
       "id": "p019",
@@ -495,9 +671,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Mitsubishi, phù hợp xe Mitsubishi, bảo vệ động cơ lâu dài."
+      "desc": "Dầu động cơ Mitsubishi Diamond chính hãng, được MMC phát triển riêng cho các dòng xe Mitsubishi. Bảo vệ tối ưu động cơ MIVEC, chống mài mòn, ổn định nhiệt. Phù hợp Xpander, Outlander, Attrage, Pajero Sport. Đạt tiêu chuẩn API SN/CF."
     },
     {
       "id": "p020",
@@ -506,9 +682,9 @@ const SHOP_DATA = {
       "brand": "castrol",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1589199492902-e247b7d79c7d?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Castrol, phù hợp xe Castrol, bảo vệ động cơ lâu dài."
+      "desc": "Castrol EDGE 5L can lớn tiết kiệm - dầu tổng hợp toàn phần với công nghệ Fluid Titanium. Lý tưởng cho garage, xưởng dịch vụ hoặc xe có dung tích nhớt lớn. Bảo vệ tối đa dưới mọi điều kiện vận hành, kéo dài chu kỳ thay dầu."
     },
     {
       "id": "p021",
@@ -517,9 +693,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số CVT chính hãng Toyota, chuyển số êm, bảo vệ hộp số vô cấp."
+      "desc": "DẦU HỘP SỐ TOYOTA CVT FE - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p022",
@@ -528,9 +704,9 @@ const SHOP_DATA = {
       "brand": "suzuki",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số tự động Suzuki, giảm mài mòn, chuyển số mượt mà."
+      "desc": "DẦU HỘP SỐ TỰ ĐỘNG SUZUKI ATFL 3317 - Dầu hộp số chính hãng SUZUKI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p023",
@@ -539,9 +715,9 @@ const SHOP_DATA = {
       "brand": "mazda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số tự động Mazda, giảm mài mòn, chuyển số mượt mà."
+      "desc": "DẦU HỘP SỐ TỰ ĐỘNG MAZDA ATF-FZ - Dầu hộp số chính hãng MAZDA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p024",
@@ -550,9 +726,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số sàn Toyota, bảo vệ bánh răng, vận hành bền bỉ."
+      "desc": "DẦU HỘP SỐ SÀN TOYOTA GL4 75W-90 - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p025",
@@ -561,9 +737,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Honda, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU TRỢ LỰC LÁI HONDA PS-F - Dầu hộp số chính hãng HONDA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p026",
@@ -572,9 +748,9 @@ const SHOP_DATA = {
       "brand": "total",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Total, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU TRỢ LỰC TOTAL 1L - Dầu hộp số chính hãng TOTAL, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p027",
@@ -583,9 +759,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Ford, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ FORD MERCON LV - Dầu hộp số chính hãng FORD, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p028",
@@ -594,9 +770,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số tự động Honda, giảm mài mòn, chuyển số mượt mà."
+      "desc": "DẦU HỘP SỐ HONDA ATF DW-1 - Dầu hộp số chính hãng HONDA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p029",
@@ -605,9 +781,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Toyota, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ TOYOTA T4 - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p030",
@@ -616,9 +792,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Ford, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU CẦU FORD 80W90 - Dầu hộp số chính hãng FORD, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p031",
@@ -627,9 +803,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Hyundai, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ HYUNDAI TST - Dầu hộp số chính hãng HYUNDAI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p032",
@@ -638,9 +814,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số CVT chính hãng Honda, chuyển số êm, bảo vệ hộp số vô cấp."
+      "desc": "DẦU HỘP SỐ HONDA CVT - Dầu hộp số chính hãng HONDA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p033",
@@ -649,9 +825,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Hyundai, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ HYUNDAI SP4 - Dầu hộp số chính hãng HYUNDAI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p034",
@@ -660,9 +836,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Ford, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ FORD ULV - Dầu hộp số chính hãng FORD, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p035",
@@ -671,9 +847,9 @@ const SHOP_DATA = {
       "brand": "suzuki",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Suzuki, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ SUZUKI AW1 - Dầu hộp số chính hãng SUZUKI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p036",
@@ -682,9 +858,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Ford, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ FORD MERCON V - Dầu hộp số chính hãng FORD, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p037",
@@ -693,9 +869,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số sàn Ford, bảo vệ bánh răng, vận hành bền bỉ."
+      "desc": "DẦU HỘP SỐ SÀN FORD 75W - Dầu hộp số chính hãng FORD, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p038",
@@ -704,9 +880,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số tự động Toyota, giảm mài mòn, chuyển số mượt mà."
+      "desc": "DẦU HỘP SỐ TỰ ĐỘNG TOYOTA WS - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p039",
@@ -715,9 +891,9 @@ const SHOP_DATA = {
       "brand": "castrol",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số tự động Castrol, giảm mài mòn, chuyển số mượt mà."
+      "desc": "DẦU HỘP SỐ CASTROL ATF TRANSMAX - Dầu hộp số chính hãng CASTROL, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p040",
@@ -726,9 +902,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số sàn Toyota, bảo vệ bánh răng, vận hành bền bỉ."
+      "desc": "DẦU SỐ SÀN TOYOTA GL5 75W85 - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p041",
@@ -737,9 +913,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Toyota, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU CẦU TOYOTA GL4 CAN 4L - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p042",
@@ -748,9 +924,9 @@ const SHOP_DATA = {
       "brand": "kia",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Kia, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ KIA SP4 - Dầu hộp số chính hãng KIA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p043",
@@ -759,9 +935,9 @@ const SHOP_DATA = {
       "brand": "kia",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Kia, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ KIA SP3 - Dầu hộp số chính hãng KIA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p044",
@@ -770,9 +946,9 @@ const SHOP_DATA = {
       "brand": "suzuki",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số CVT chính hãng Suzuki, chuyển số êm, bảo vệ hộp số vô cấp."
+      "desc": "DẦU HỘP SỐ SUZUKI CVT - Dầu hộp số chính hãng SUZUKI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p045",
@@ -781,9 +957,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Toyota, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU TRỢ LỰC TOYOTA D3 - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p046",
@@ -792,9 +968,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số CVT chính hãng Hyundai, chuyển số êm, bảo vệ hộp số vô cấp."
+      "desc": "DẦU HỘP SỐ HYUNDAI CVT - Dầu hộp số chính hãng HYUNDAI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p047",
@@ -803,9 +979,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Ford, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU LẠNH FORD - Dầu hộp số chính hãng FORD, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p048",
@@ -814,9 +990,9 @@ const SHOP_DATA = {
       "brand": "zf",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Zf, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ ZF8 - Dầu hộp số chính hãng ZF, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p049",
@@ -825,9 +1001,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Toyota, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ PHỤ TOYOTA - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p050",
@@ -836,9 +1012,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Mitsubishi, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ MITSUBISHI PA - Dầu hộp số chính hãng MITSUBISHI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p051",
@@ -847,9 +1023,9 @@ const SHOP_DATA = {
       "brand": "kia",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số sàn Kia, bảo vệ bánh răng, vận hành bền bỉ."
+      "desc": "DẦU SỐ SÀN 75W KIA - Dầu hộp số chính hãng KIA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p052",
@@ -858,9 +1034,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số sàn Honda, bảo vệ bánh răng, vận hành bền bỉ."
+      "desc": "DẦU SỐ SÀN HONDA - Dầu hộp số chính hãng HONDA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p053",
@@ -869,9 +1045,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số sàn Hyundai, bảo vệ bánh răng, vận hành bền bỉ."
+      "desc": "DẦU SỐ SÀN HYUNDAI - Dầu hộp số chính hãng HYUNDAI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p054",
@@ -880,9 +1056,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số CVT chính hãng Mitsubishi, chuyển số êm, bảo vệ hộp số vô cấp."
+      "desc": "DẦU HỘP SỐ MITSUBISHI CVT J4 - Dầu hộp số chính hãng MITSUBISHI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p055",
@@ -891,9 +1067,9 @@ const SHOP_DATA = {
       "brand": "kia",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Kia, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ KIA SP4M-1 - Dầu hộp số chính hãng KIA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p056",
@@ -902,9 +1078,9 @@ const SHOP_DATA = {
       "brand": "vinfast",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số CVT chính hãng Vinfast, chuyển số êm, bảo vệ hộp số vô cấp."
+      "desc": "DẦU HỘP SỐ CVT FADIL VINFAST - Dầu hộp số chính hãng VINFAST, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p057",
@@ -913,9 +1089,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Ford tiêu chuẩn DOT4, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH FORD DOT4 - Dầu phanh chính hãng FORD, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p058",
@@ -924,9 +1100,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Toyota tiêu chuẩn DOT3, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH TOYOTA DOT3 - Dầu phanh chính hãng TOYOTA, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p059",
@@ -935,9 +1111,9 @@ const SHOP_DATA = {
       "brand": "total",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Total tiêu chuẩn DOT4, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH TOTAL DOT4 - Dầu phanh chính hãng TOTAL, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p060",
@@ -946,9 +1122,9 @@ const SHOP_DATA = {
       "brand": "thaco",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Thaco tiêu chuẩn DOT3, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH DOT3 THACO - Dầu phanh chính hãng THACO, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p061",
@@ -957,9 +1133,9 @@ const SHOP_DATA = {
       "brand": "kia",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Kia tiêu chuẩn DOT3, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH KIA DOT3 - Dầu phanh chính hãng KIA, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p062",
@@ -968,9 +1144,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Honda tiêu chuẩn DOT3, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH HONDA DOT3 - Dầu phanh chính hãng HONDA, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p063",
@@ -979,9 +1155,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Hyundai tiêu chuẩn DOT4, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH HYUNDAI DOT4 - Dầu phanh chính hãng HYUNDAI, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p064",
@@ -990,9 +1166,9 @@ const SHOP_DATA = {
       "brand": "vinfast",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Vinfast tiêu chuẩn DOT4, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH VINFAST DOT4 - Dầu phanh chính hãng VINFAST, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p065",
@@ -1001,9 +1177,9 @@ const SHOP_DATA = {
       "brand": "mazda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Mazda tiêu chuẩn DOT3, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH MAZDA DOT3 - Dầu phanh chính hãng MAZDA, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p066",
@@ -1012,9 +1188,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Mitsubishi tiêu chuẩn DOT4, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH MITSUBISHI DOT4 - Dầu phanh chính hãng MITSUBISHI, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p067",
@@ -1023,9 +1199,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG PN 245, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG PN 245 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p068",
@@ -1034,9 +1210,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG 229, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG 229 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p069",
@@ -1045,9 +1221,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG PN 201, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG PN 201 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p070",
@@ -1056,9 +1232,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG EPR PN 109, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG EPR PN 109 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p071",
@@ -1067,9 +1243,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG PN 206/260, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG PN 206/260 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p072",
@@ -1078,9 +1254,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG DOC DIESEL, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG DOC DIESEL - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p073",
@@ -1089,9 +1265,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG PN 208 44K, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG PN 208 44K - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p074",
@@ -1100,9 +1276,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG DUNG DỊCH VỆ SINH KIM PHUN BG 22932, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH VỆ SINH KIM PHUN BG 22932 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p075",
@@ -1111,9 +1287,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG 44K 177ML, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG 44K 177ML - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p076",
@@ -1122,9 +1298,9 @@ const SHOP_DATA = {
       "brand": "",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Sản phẩm chính hãng, chất lượng cao."
+      "desc": "XỊT CHẾ LẠC ĐÀ - Sản phẩm chăm sóc xe chính hãng , chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p077",
@@ -1133,9 +1309,9 @@ const SHOP_DATA = {
       "brand": "thaco",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Sản phẩm chính hãng Thaco, chất lượng cao, phù hợp cho xe Thaco."
+      "desc": "DẦU LẠNH 68 THACO - Sản phẩm chăm sóc xe chính hãng THACO, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p078",
@@ -1144,9 +1320,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch làm sạch két nước Ford, loại bỏ cặn bẩn, phục hồi hiệu suất làm mát."
+      "desc": "DUNG DỊCH SÚC RỬA KÉT NƯỚC FORD MOTOCRAFT - Sản phẩm chăm sóc xe chính hãng FORD, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p079",
@@ -1155,9 +1331,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch làm sạch két nước Bg, loại bỏ cặn bẩn, phục hồi hiệu suất làm mát."
+      "desc": "DUNG DỊCH BG SÚC RỬA KÉT NƯỚC - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p080",
@@ -1166,9 +1342,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1540066019607-e5f69323a8dc?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch súc rửa động cơ Toyota, tẩy cặn dầu bám bên trong động cơ trước khi thay nhớt mới."
+      "desc": "DUNG DỊCH SÚC RỬA ĐỘNG CƠ TOYOTA DIESEL - Dung dịch súc rửa động cơ TOYOTA, hòa tan và loại bỏ cặn dầu bám trong buồng động cơ trước khi thay nhớt mới. Làm sạch đường dầu, phục hồi áp suất dầu, bảo vệ động cơ sau khi thay nhớt. Dùng trước mỗi lần thay dầu."
     },
     {
       "id": "p081",
@@ -1177,9 +1353,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1540066019607-e5f69323a8dc?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch súc rửa động cơ Toyota, tẩy cặn dầu bám bên trong động cơ trước khi thay nhớt mới."
+      "desc": "DUNG DỊCH SÚC RỬA ĐỘNG CƠ TOYOTA XĂNG - Dung dịch súc rửa động cơ TOYOTA, hòa tan và loại bỏ cặn dầu bám trong buồng động cơ trước khi thay nhớt mới. Làm sạch đường dầu, phục hồi áp suất dầu, bảo vệ động cơ sau khi thay nhớt. Dùng trước mỗi lần thay dầu."
     },
     {
       "id": "p082",
@@ -1188,9 +1364,9 @@ const SHOP_DATA = {
       "brand": "castrol",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1540066019607-e5f69323a8dc?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch súc rửa động cơ Castrol, tẩy cặn dầu bám bên trong động cơ trước khi thay nhớt mới."
+      "desc": "DUNG DỊCH SÚC RỬA ĐỘNG CƠ CASTROL SHAMPOO - Dung dịch súc rửa động cơ CASTROL, hòa tan và loại bỏ cặn dầu bám trong buồng động cơ trước khi thay nhớt mới. Làm sạch đường dầu, phục hồi áp suất dầu, bảo vệ động cơ sau khi thay nhớt. Dùng trước mỗi lần thay dầu."
     },
     {
       "id": "p083",
@@ -1199,9 +1375,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1540066019607-e5f69323a8dc?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch súc rửa động cơ Wurth, tẩy cặn dầu bám bên trong động cơ trước khi thay nhớt mới."
+      "desc": "PHỤ GIA PHỤC HỒI CÔNG SUẤT WURTH ENGINE OIL TREATMENT 300ML - Dung dịch súc rửa động cơ WURTH, hòa tan và loại bỏ cặn dầu bám trong buồng động cơ trước khi thay nhớt mới. Làm sạch đường dầu, phục hồi áp suất dầu, bảo vệ động cơ sau khi thay nhớt. Dùng trước mỗi lần thay dầu."
     },
     {
       "id": "p084",
@@ -1210,9 +1386,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1540066019607-e5f69323a8dc?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch súc rửa động cơ Honda, tẩy cặn dầu bám bên trong động cơ trước khi thay nhớt mới."
+      "desc": "DUNG DỊCH PHỤC HỒI CÔNG SUẤT HONDA ENGINE OIL TREATMENT - Dung dịch súc rửa động cơ HONDA, hòa tan và loại bỏ cặn dầu bám trong buồng động cơ trước khi thay nhớt mới. Làm sạch đường dầu, phục hồi áp suất dầu, bảo vệ động cơ sau khi thay nhớt. Dùng trước mỗi lần thay dầu."
     },
     {
       "id": "p085",
@@ -1221,9 +1397,9 @@ const SHOP_DATA = {
       "brand": "3m",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh dàn lạnh 3M, khử khuẩn, loại bỏ mùi hôi trong hệ thống điều hòa."
+      "desc": "DUNG DỊCH VỆ SINH DÀN LẠNH 3M EVAPORATOR CLEANER 1L - Sản phẩm chăm sóc xe chính hãng 3M, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p086",
@@ -1232,9 +1408,9 @@ const SHOP_DATA = {
       "brand": "tunap",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh dàn lạnh Tunap, khử khuẩn, loại bỏ mùi hôi trong hệ thống điều hòa."
+      "desc": "DUNG DỊCH VỆ SINH ĐIỀU HÒA AIRCOWELL 994 - Sản phẩm chăm sóc xe chính hãng TUNAP, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p087",
@@ -1243,9 +1419,9 @@ const SHOP_DATA = {
       "brand": "mazda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Mazda, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH LÀM SẠCH KIM PHUN BUỒNG ĐỐT MAZDA - Dung dịch vệ sinh kim phun MAZDA, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p088",
@@ -1254,9 +1430,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Wurth, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH SÚC BÉC XĂNG WURTH LBW400 - Dung dịch vệ sinh kim phun WURTH, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p089",
@@ -1265,9 +1441,9 @@ const SHOP_DATA = {
       "brand": "3m",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun 3M, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH VỆ SINH KIM PHUN 3M - Dung dịch vệ sinh kim phun 3M, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p090",
@@ -1276,9 +1452,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Honda, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH VỆ SINH KIM PHUN HONDA - Dung dịch vệ sinh kim phun HONDA, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p091",
@@ -1287,9 +1463,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Toyota, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH VỆ SINH KIM PHUN XĂNG TOYOTA - Dung dịch vệ sinh kim phun TOYOTA, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p092",
@@ -1298,9 +1474,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Toyota, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH VỆ SINH KIM PHUN DIESEL TOYOTA - Dung dịch vệ sinh kim phun TOYOTA, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p093",
@@ -1309,9 +1485,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Mitsubishi, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH VỆ SINH KIM PHUN MITSUBISHI - Dung dịch vệ sinh kim phun MITSUBISHI, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p094",
@@ -1320,9 +1496,9 @@ const SHOP_DATA = {
       "brand": "thaco",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Thaco, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH LÀM SẠCH KIM PHUN BUỒNG ĐỐT THACO - Dung dịch vệ sinh kim phun THACO, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p095",
@@ -1331,9 +1507,9 @@ const SHOP_DATA = {
       "brand": "wepp",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Wepp, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "CHAI WEPP KIM PHUN - Dung dịch vệ sinh kim phun WEPP, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p096",
@@ -1342,9 +1518,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun Mitsubishi, tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH SÚC RỬA ĐỘNG CƠ MITSUBISHI - Dung dịch vệ sinh kim phun MITSUBISHI, tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     },
     {
       "id": "p097",
@@ -1353,9 +1529,9 @@ const SHOP_DATA = {
       "brand": "gunk",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất Gunk, làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "DUNG DỊCH TẨY RỬA KHOANG ĐỘNG CƠ GUNK 425G - Sản phẩm chăm sóc xe chính hãng GUNK, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p098",
@@ -1364,9 +1540,9 @@ const SHOP_DATA = {
       "brand": "3m",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất 3M, làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "DUNG DỊCH BẢO DƯỠNG LỐP XE 3M TIRE DRESSING 3.8L - Sản phẩm chăm sóc xe chính hãng 3M, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p099",
@@ -1375,9 +1551,9 @@ const SHOP_DATA = {
       "brand": "3m",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất 3M, làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "DUNG DỊCH VỆ SINH ĐA NĂNG 3M - Sản phẩm chăm sóc xe chính hãng 3M, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p100",
@@ -1386,9 +1562,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất Wurth, làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "DUNG DỊCH XỊT BẢO TRÌ ẮC QUY WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p101",
@@ -1397,9 +1573,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất Wurth, làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "CHAI XỊT TẨY DECAL WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p102",
@@ -1408,9 +1584,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất Wurth, làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "CHAI XỊT TẨY NHỰA ĐƯỜNG WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p103",
@@ -1419,9 +1595,9 @@ const SHOP_DATA = {
       "brand": "",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất , làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "HÓA CHẤT PHỦ CERAMIC LABOCOSMETICA 50ML - Sản phẩm chăm sóc xe chính hãng , chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p104",
@@ -1430,9 +1606,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh nội thất Wurth, làm sạch và bảo vệ bề mặt trong xe."
+      "desc": "CHAI VỆ SINH NỘI THẤT WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p105",
@@ -1441,9 +1617,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Toyota, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC DẦU TOYOTA D4 - Lọc dầu chính hãng TOYOTA, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p106",
@@ -1452,9 +1628,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Toyota, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC TOYOTA N2 - Lọc dầu chính hãng TOYOTA, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p107",
@@ -1463,9 +1639,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Ford, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC DẦU FORD RANGER - Lọc dầu chính hãng FORD, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p108",
@@ -1474,9 +1650,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Toyota, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC DẦU TOYOTA D2 - Lọc dầu chính hãng TOYOTA, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p109",
@@ -1485,9 +1661,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Honda, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC DẦU HONDA - Lọc dầu chính hãng HONDA, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p110",
@@ -1496,9 +1672,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Ford, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "DẦU ĐỘNG CƠ FORD MOTOCRAFT - Lọc dầu chính hãng FORD, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p111",
@@ -1507,9 +1683,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Toyota, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC DẦU TOYOTA DAIHATSU - Lọc dầu chính hãng TOYOTA, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p112",
@@ -1518,9 +1694,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Gioăng/long đen Hyundai, chất lượng cao, chống rò rỉ dầu hiệu quả."
+      "desc": "LONG ĐEN HYUNDAI/KIA - Sản phẩm chăm sóc xe chính hãng HYUNDAI, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p113",
@@ -1529,9 +1705,9 @@ const SHOP_DATA = {
       "brand": "threebond",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Gioăng/long đen Threebond, chất lượng cao, chống rò rỉ dầu hiệu quả."
+      "desc": "KEO GIOĂNG MÁY THREEBOND - Sản phẩm chăm sóc xe chính hãng THREEBOND, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p114",
@@ -1540,9 +1716,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Gioăng/long đen Toyota, chất lượng cao, chống rò rỉ dầu hiệu quả."
+      "desc": "LONG ĐEN TOYOTA - Sản phẩm chăm sóc xe chính hãng TOYOTA, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p115",
@@ -1551,9 +1727,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Mỡ bôi trơn Wurth, bảo dưỡng hệ thống phanh, chịu nhiệt và chịu nước tốt."
+      "desc": "MỠ BẢO DƯỠNG PHANH WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p116",
@@ -1562,9 +1738,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Mỡ bôi trơn Bg, bảo dưỡng hệ thống phanh, chịu nhiệt và chịu nước tốt."
+      "desc": "COMBO MỠ TRA ẮC CHỐT PHANH BG 605BK + WURTH BRAKE PASTE - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p117",
@@ -1573,9 +1749,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Mỡ bôi trơn Bg, bảo dưỡng hệ thống phanh, chịu nhiệt và chịu nước tốt."
+      "desc": "MỠ BÔI CHỐT PHANH BG - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p118",
@@ -1584,9 +1760,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Mỡ bôi trơn Toyota, bảo dưỡng hệ thống phanh, chịu nhiệt và chịu nước tốt."
+      "desc": "MỠ BẢO DƯỠNG PHANH TOYOTA TUÝP BÉ - Sản phẩm chăm sóc xe chính hãng TOYOTA, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p119",
@@ -1595,9 +1771,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Mỡ bôi trơn Toyota, bảo dưỡng hệ thống phanh, chịu nhiệt và chịu nước tốt."
+      "desc": "MỠ HỒNG BẢO DƯỠNG PHANH TOYOTA - Sản phẩm chăm sóc xe chính hãng TOYOTA, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p120",
@@ -1606,9 +1782,9 @@ const SHOP_DATA = {
       "brand": "mazda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Mazda, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT XE HƠI MAZDA - Nước làm mát chính hãng MAZDA, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p121",
@@ -1617,9 +1793,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Ford, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT FORD MOTOCRAFT - Nước làm mát chính hãng FORD, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p122",
@@ -1628,9 +1804,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Toyota, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT TOYOTA - Nước làm mát chính hãng TOYOTA, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p123",
@@ -1639,9 +1815,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Honda, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT HONDA - Nước làm mát chính hãng HONDA, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p124",
@@ -1650,9 +1826,9 @@ const SHOP_DATA = {
       "brand": "suzuki",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Suzuki, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT SUZUKI CAN 4L - Nước làm mát chính hãng SUZUKI, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p125",
@@ -1661,9 +1837,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Hyundai, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT HYUNDAI - Nước làm mát chính hãng HYUNDAI, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p126",
@@ -1672,9 +1848,9 @@ const SHOP_DATA = {
       "brand": "vinfast",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Vinfast, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT VINFAST - Nước làm mát chính hãng VINFAST, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p127",
@@ -1683,9 +1859,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Mitsubishi, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT MITSUBISHI - Nước làm mát chính hãng MITSUBISHI, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p128",
@@ -1694,9 +1870,9 @@ const SHOP_DATA = {
       "brand": "peugeot",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Peugout, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC MÁT PEUGEOT - Nước làm mát chính hãng PEUGEOT, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p129",
@@ -1705,9 +1881,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh Wurth, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT PHANH WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p130",
@@ -1716,9 +1892,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh Toyota, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT PHANH TOYOTA - Sản phẩm chăm sóc xe chính hãng TOYOTA, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p131",
@@ -1727,9 +1903,9 @@ const SHOP_DATA = {
       "brand": "threebond",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh Threebond, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT PHANH THREEBOND - Sản phẩm chăm sóc xe chính hãng THREEBOND, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p132",
@@ -1738,9 +1914,9 @@ const SHOP_DATA = {
       "brand": "forch",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh Forch, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT PHANH FORCH - Sản phẩm chăm sóc xe chính hãng FORCH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p133",
@@ -1749,9 +1925,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh Wurth, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT VỆ SINH HỌNG GA WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p134",
@@ -1760,9 +1936,9 @@ const SHOP_DATA = {
       "brand": "wurth",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Sơn phủ gầm Wurth, chống rỉ sét, cách âm và bảo vệ gầm xe bền vững."
+      "desc": "PHỦ GẦM WURTH - Sản phẩm chăm sóc xe chính hãng WURTH, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p135",
@@ -1771,9 +1947,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1635774855317-edf3ee4463db?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Hyundai độ nhớt 5W30, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "DẦU ĐỘNG CƠ HYUNDAI 5W30 - Dầu động cơ chính hãng HYUNDAI, bảo vệ toàn diện các chi tiết chuyển động trong động cơ. Giảm ma sát, chống mài mòn, ổn định nhiệt độ động cơ. Thay đúng chu kỳ để duy trì hiệu suất động cơ tối ưu."
     },
     {
       "id": "p136",
@@ -1782,9 +1958,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Mitsubishi, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ MITSUBISHI MA-1 - Dầu hộp số chính hãng MITSUBISHI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p137",
@@ -1793,9 +1969,9 @@ const SHOP_DATA = {
       "brand": "hyundai",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh Hyundai, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT PHANH HYUNDAI - Sản phẩm chăm sóc xe chính hãng HYUNDAI, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p138",
@@ -1804,9 +1980,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG PN 210, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG PN 210 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p139",
@@ -1815,9 +1991,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG BG MOA, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "BG MOA - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p140",
@@ -1826,9 +2002,9 @@ const SHOP_DATA = {
       "brand": "ford",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Ford, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC DẦU FORD KHÁC - Lọc dầu chính hãng FORD, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p141",
@@ -1837,9 +2013,9 @@ const SHOP_DATA = {
       "brand": "honda",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Gioăng/long đen Honda, chất lượng cao, chống rò rỉ dầu hiệu quả."
+      "desc": "LONG ĐEN HONDA - Sản phẩm chăm sóc xe chính hãng HONDA, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p142",
@@ -1848,9 +2024,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ Mitsubishi độ nhớt 0W20, bảo vệ động cơ tối ưu, giảm ma sát và mài mòn."
+      "desc": "DẦU ĐỘNG CƠ MITSUBISHI 0W20 - Dầu động cơ chính hãng MITSUBISHI, bảo vệ toàn diện các chi tiết chuyển động trong động cơ. Giảm ma sát, chống mài mòn, ổn định nhiệt độ động cơ. Thay đúng chu kỳ để duy trì hiệu suất động cơ tối ưu."
     },
     {
       "id": "p143",
@@ -1859,9 +2035,9 @@ const SHOP_DATA = {
       "brand": "kia",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80",
       "stock": true,
-      "desc": "Nước làm mát chính hãng Kia, chống ăn mòn két nước, ổn định nhiệt độ động cơ."
+      "desc": "NƯỚC LÀM MÁT KIA - Nước làm mát chính hãng KIA, pha sẵn tỉ lệ tối ưu, chống ăn mòn két nước và đường ống làm mát. Ổn định nhiệt độ động cơ, bảo vệ bơm nước, chống đóng cặn. Phù hợp sử dụng trực tiếp không cần pha thêm nước."
     },
     {
       "id": "p144",
@@ -1870,9 +2046,9 @@ const SHOP_DATA = {
       "brand": "vinfast",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
       "stock": true,
-      "desc": "Dầu phanh Vinfast tiêu chuẩn DOT, điểm sôi cao, an toàn cho hệ thống phanh ABS."
+      "desc": "DẦU PHANH VINFAST - Dầu phanh chính hãng VINFAST, điểm sôi cao đảm bảo an toàn cho hệ thống phanh ABS và ESC. Chống ăn mòn xi lanh phanh, duy trì hiệu suất phanh ổn định trong mọi điều kiện. Nên thay mỗi 2 năm hoặc 40.000km."
     },
     {
       "id": "p145",
@@ -1881,9 +2057,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh Bg, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT PHANH BG - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p146",
@@ -1892,9 +2068,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Mỡ bôi trơn Mitsubishi, bảo dưỡng hệ thống phanh, chịu nhiệt và chịu nước tốt."
+      "desc": "MỠ PHANH MITSUBISHI - Sản phẩm chăm sóc xe chính hãng MITSUBISHI, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p147",
@@ -1903,9 +2079,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG 303, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "DUNG DỊCH BG 303 - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p148",
@@ -1914,9 +2090,9 @@ const SHOP_DATA = {
       "brand": "x1r",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Xịt vệ sinh phanh X1R, tẩy dầu mỡ, bụi bẩn trên đĩa phanh và má phanh."
+      "desc": "XỊT PHANH X1R - Sản phẩm chăm sóc xe chính hãng X1R, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p149",
@@ -1925,9 +2101,9 @@ const SHOP_DATA = {
       "brand": "x1r",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Sản phẩm chính hãng X1R, chất lượng cao, phù hợp cho xe X1R."
+      "desc": "CHAI X1R - Sản phẩm chăm sóc xe chính hãng X1R, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p150",
@@ -1936,9 +2112,9 @@ const SHOP_DATA = {
       "brand": "lexus",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=600&q=80",
       "stock": true,
-      "desc": "Dầu động cơ chính hãng Lexus, phù hợp xe Lexus, bảo vệ động cơ lâu dài."
+      "desc": "DẦU ĐỘNG CƠ LEXUS - Dầu động cơ chính hãng LEXUS, bảo vệ toàn diện các chi tiết chuyển động trong động cơ. Giảm ma sát, chống mài mòn, ổn định nhiệt độ động cơ. Thay đúng chu kỳ để duy trì hiệu suất động cơ tối ưu."
     },
     {
       "id": "p151",
@@ -1947,9 +2123,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Toyota, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ T4 4L - Dầu hộp số chính hãng TOYOTA, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p152",
@@ -1958,9 +2134,9 @@ const SHOP_DATA = {
       "brand": "toyota",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80",
       "stock": true,
-      "desc": "Lọc dầu chính hãng Toyota, lọc sạch cặn bẩn, bảo vệ động cơ lâu dài."
+      "desc": "LỌC DẦU TOYOTA BZ030 - Lọc dầu chính hãng TOYOTA, lọc sạch kim loại mài mòn và tạp chất trong dầu động cơ. Đảm bảo dầu sạch lưu thông bảo vệ các chi tiết chuyển động. Nên thay mỗi lần thay dầu để đạt hiệu quả bảo vệ tốt nhất."
     },
     {
       "id": "p153",
@@ -1969,9 +2145,9 @@ const SHOP_DATA = {
       "brand": "bg",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch BG BG 106 SÚC RỬA HỘP SỐ, phụ gia bảo dưỡng chuyên nghiệp, nhập khẩu chính hãng."
+      "desc": "BG 106 SÚC RỬA HỘP SỐ - Sản phẩm chăm sóc xe chính hãng BG, chất lượng cao được kiểm nghiệm kỹ càng. Sử dụng đúng theo hướng dẫn để đạt hiệu quả tốt nhất và bảo vệ xe của bạn lâu dài."
     },
     {
       "id": "p154",
@@ -1980,9 +2156,9 @@ const SHOP_DATA = {
       "brand": "mitsubishi",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       "stock": true,
-      "desc": "Dầu hộp số chính hãng Mitsubishi, bảo vệ hệ thống truyền động hiệu quả."
+      "desc": "DẦU HỘP SỐ MITSUBISHI MA1 5L - Dầu hộp số chính hãng MITSUBISHI, được nhà sản xuất phát triển đặc biệt cho hệ thống truyền động của xe. Đảm bảo chuyển số êm ái, giảm mài mòn bánh răng, bảo vệ hộp số lâu dài. Sử dụng đúng loại dầu chính hãng giúp kéo dài tuổi thọ hộp số."
     },
     {
       "id": "p155",
@@ -1991,9 +2167,9 @@ const SHOP_DATA = {
       "brand": "",
       "price": "Liên hệ",
       "unit": "chai/hộp",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=600&q=80",
       "stock": true,
-      "desc": "Dung dịch vệ sinh kim phun , tẩy cặn carbon, phục hồi hiệu suất phun nhiên liệu."
+      "desc": "DUNG DỊCH VỆ SINH DPF - Dung dịch vệ sinh kim phun , tẩy sạch cặn carbon bám trên đầu kim phun, phục hồi lượng phun nhiên liệu chính xác. Cải thiện hiệu suất động cơ, giảm tiêu thụ nhiên liệu, giảm khí thải. Sử dụng trực tiếp qua bình nhiên liệu."
     }
   ]
 };
@@ -2072,20 +2248,14 @@ function renderGrid(){
     const catLabel = SHOP_DATA.categories.find(c => c.id === p.category)?.label || '';
     const card = document.createElement('div');
     card.className = 'card';
+    card.onclick = (e) => { if(!e.target.closest('.btn-order') && !e.target.closest('a')) openModal(p.id); };
     card.innerHTML = `
-      <div class="card-img">
-        <img src="${p.image}" alt="${p.name}" loading="lazy">
-        <span class="card-badge ${p.stock?'badge-stock':'badge-out'}">${p.stock?'Còn hàng':'Hết hàng'}</span>
-      </div>
-      <div class="card-body">
+      <div class="card-body-simple">
         <div class="card-cat">${catLabel}</div>
         <div class="card-name">${p.name}</div>
-        <div class="card-desc">${p.desc}</div>
-        <div class="card-footer">
-          <div class="card-price">${formatPrice(p.price)} <small>/ ${p.unit}</small></div>
-          ${p.stock
-            ? `<a class="btn-order" href="${buildZaloLink(SHOP_DATA.shop.zalo,p.name)}" target="_blank">💬 Đặt hàng</a>`
-            : `<button class="btn-order" disabled>Hết hàng</button>`}
+        <div class="card-stock-row">
+          <span class="card-badge-inline ${p.stock?'badge-stock':'badge-out'}">${p.stock?'Còn hàng':'Hết hàng'}</span>
+          <span class="card-tap-hint">Nhấn để xem chi tiết →</span>
         </div>
       </div>`;
     grid.appendChild(card);
@@ -2097,6 +2267,56 @@ function render(){ renderFilters(); renderGrid(); }
 document.getElementById('stat-products').textContent = SHOP_DATA.products.length;
 document.getElementById('search').addEventListener('input', e => { searchTerm = e.target.value; renderGrid(); });
 render();
+
+function openModal(productId){
+  const p = SHOP_DATA.products.find(x => x.id === productId);
+  if(!p) return;
+  const catLabel = SHOP_DATA.categories.find(c => c.id === p.category)?.label || '';
+  
+  // Image
+  const imgWrap = document.getElementById('modal-img-wrap');
+  if(p.image){
+    imgWrap.innerHTML = `<img class="modal-img" src="${p.image}" alt="${p.name}">`;
+  } else {
+    imgWrap.innerHTML = `<div class="modal-img-placeholder">🛢️</div>`;
+  }
+
+  document.getElementById('modal-cat').textContent = catLabel;
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-desc').textContent = p.desc || 'Sản phẩm chính hãng, chất lượng cao.';
+  document.getElementById('modal-price').innerHTML = `${p.price === 'Liên hệ' ? 'Liên hệ' : Number(p.price).toLocaleString('vi-VN') + 'đ'} <small>/ ${p.unit}</small>`;
+  
+  document.getElementById('modal-stock').innerHTML = p.stock
+    ? `<span class="modal-stock-ok">✓ Còn hàng</span>`
+    : `<span class="modal-stock-out">✗ Hết hàng</span>`;
+
+  const zaloLink = `https://zalo.me/${SHOP_DATA.shop.zalo}?text=${encodeURIComponent('Chào shop, tôi muốn đặt: ' + p.name)}`;
+  const callLink = `tel:${SHOP_DATA.shop.phone}`;
+  
+  document.getElementById('modal-actions').innerHTML = p.stock
+    ? `<a class="btn-order-lg" href="${zaloLink}" target="_blank">💬 Đặt hàng qua Zalo</a>
+       <a class="btn-call-lg" href="${callLink}">📞 Gọi ngay</a>`
+    : `<button class="btn-order-lg" disabled style="opacity:0.4;cursor:not-allowed;">Hết hàng</button>`;
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e){
+  if(e.target === document.getElementById('modal-overlay')){
+    closeModalDirect();
+  }
+}
+
+function closeModalDirect(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeModalDirect();
+});
+
 </script>
 </body>
 </html>
