@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Phụ Tùng Thành Đạt — Phụ tùng xe máy chính hãng</title>
+<title>Car Beautyfull — Dầu nhớt & dung dịch chăm sóc xe hơi</title>
 <style>
   :root{
     --steel-900:#13181d;
@@ -24,7 +24,9 @@
   body{font-family:var(--font-body);background:var(--paper);color:var(--steel-900);line-height:1.5;}
 
   /* HEADER */
-  header{background:var(--steel-900);color:var(--steel-100);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--safety);}
+  .sticky-top{position:sticky;top:0;z-index:100;}
+  #catalog, #bao-duong{scroll-margin-top:140px;}
+  header{background:var(--steel-900);color:var(--steel-100);border-bottom:3px solid var(--safety);}
   .header-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
   .brand{display:flex;align-items:center;gap:10px;}
   .brand-mark{width:38px;height:38px;background:var(--safety);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--steel-900);flex-shrink:0;}
@@ -290,10 +292,42 @@
   .card-img img{width:100%;height:100%;object-fit:cover;display:block;}
   .card-tap-hint-row{text-align:right;}
 
+  /* ===== SUBNAV ===== */
+  .subnav{background:var(--steel-800);border-bottom:1px solid var(--steel-700);}
+  .subnav-inner{max-width:1200px;margin:0 auto;padding:10px 24px;display:flex;gap:24px;flex-wrap:wrap;}
+  .subnav-inner a{font-family:var(--font-mono);font-size:12px;color:var(--steel-300);text-decoration:none;letter-spacing:0.5px;transition:color .15s;}
+  .subnav-inner a:hover{color:var(--safety);}
+
+  /* ===== SECTION HEAD chung cho maintenance & knowledge ===== */
+  .section-wrap{max-width:1200px;margin:0 auto;padding:48px 24px;}
+  .section-head h2{font-family:var(--font-display);font-weight:600;font-size:28px;}
+  .section-head p{font-size:13px;color:var(--steel-500);margin-top:6px;max-width:640px;}
+  .subsection-title{font-family:var(--font-display);font-weight:600;font-size:18px;color:var(--steel-700);margin:36px 0 4px;}
+
+  /* ===== MAINTENANCE (lịch bảo dưỡng theo km) ===== */
+  .milestone-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:28px;}
+  .milestone-card{background:#fff;border:1px solid var(--steel-100);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--safety);}
+  .milestone-km{font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--steel-900);}
+  .milestone-title{font-family:var(--font-mono);font-size:11px;color:var(--steel-500);text-transform:uppercase;letter-spacing:0.5px;}
+  .milestone-list{font-size:13px;color:var(--steel-700);padding-left:18px;display:flex;flex-direction:column;gap:5px;}
+  .milestone-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px;}
+  .tag-btn{font-family:var(--font-mono);font-size:11px;background:var(--paper);border:1px solid var(--steel-100);color:var(--steel-700);padding:6px 10px;border-radius:14px;cursor:pointer;transition:all .15s;}
+  .tag-btn:hover{border-color:var(--safety);color:var(--safety-dark);}
+
+  /* ===== KNOWLEDGE (kiến thức & cẩm nang xe) ===== */
+  .knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:28px;}
+  .knowledge-card{background:#fff;border:1px solid var(--steel-100);border-radius:6px;padding:20px;cursor:pointer;transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:8px;}
+  .knowledge-card:hover{border-color:var(--steel-300);box-shadow:0 4px 16px rgba(19,24,29,0.06);}
+  .knowledge-icon{font-size:24px;}
+  .knowledge-title{font-family:var(--font-display);font-weight:600;font-size:16px;}
+  .knowledge-teaser{font-size:13px;color:var(--steel-500);flex:1;}
+  .knowledge-readmore{font-family:var(--font-mono);font-size:11px;color:var(--safety);}
+
 </style>
 </head>
 <body>
 
+<div class="sticky-top">
 <header>
   <div class="header-inner">
     <div class="brand">
@@ -306,6 +340,14 @@
     <a href="tel:0923292593" class="btn-call">📞 0923.292.593</a>
   </div>
 </header>
+
+<nav class="subnav">
+  <div class="subnav-inner">
+    <a href="#catalog">Sản phẩm</a>
+    <a href="#bao-duong">Kiến thức bảo dưỡng xe</a>
+  </div>
+</nav>
+</div>
 
 <section class="hero">
   <div class="hero-inner">
@@ -344,6 +386,19 @@
   <div class="empty-state" id="empty" style="display:none;">Không tìm thấy sản phẩm phù hợp.</div>
 </section>
 
+<section class="section-wrap" id="bao-duong">
+  <div class="section-head">
+    <h2>Kiến thức bảo dưỡng xe</h2>
+    <p>Lịch bảo dưỡng theo số km và những điều nên biết để chăm sóc xe đúng cách, đỡ tốn tiền sửa chữa về sau.</p>
+  </div>
+
+  <h3 class="subsection-title">Lịch bảo dưỡng theo số km</h3>
+  <div class="milestone-track" id="milestone-track"></div>
+
+  <h3 class="subsection-title">Bài viết kiến thức</h3>
+  <div class="knowledge-grid" id="knowledge-grid"></div>
+</section>
+
 <section class="trust">
   <div class="trust-inner">
     <div class="trust-item"><h3>Hàng chính hãng</h3><p>Tất cả phụ tùng có nguồn gốc rõ ràng, cam kết đúng loại đúng xe.</p></div>
@@ -380,6 +435,19 @@
 
 <div class="sticky-cta">
   <a href="https://zalo.me/0923292593" target="_blank" class="btn-primary">💬 Chat Zalo đặt hàng</a>
+</div>
+
+<!-- MODAL BÀI VIẾT KIẾN THỨC -->
+<div class="modal-overlay" id="article-modal-overlay" onclick="closeArticleModal(event)">
+  <div class="modal" id="article-modal" style="max-width:560px;">
+    <button class="modal-close" onclick="closeArticleModalDirect()">✕</button>
+    <div class="modal-body" style="padding-top:28px;">
+      <div class="modal-cat" id="article-modal-cat"></div>
+      <div class="modal-name" id="article-modal-title"></div>
+      <div class="modal-desc" id="article-modal-content" style="white-space:pre-line;"></div>
+      <div class="modal-actions" id="article-modal-actions" style="margin-top:16px;"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -3124,6 +3192,143 @@ let activeCategory = 'all';
 let activeBrand = null;
 let searchTerm = '';
 
+const MAINTENANCE_SCHEDULE = [
+  {
+    km: '5.000 km',
+    title: 'Kiểm tra định kỳ',
+    items: ['Kiểm tra mức dầu động cơ', 'Đảo lốp, kiểm tra áp suất lốp', 'Kiểm tra gạt mưa, nước rửa kính'],
+    categories: ['dau-dong-co']
+  },
+  {
+    km: '10.000 km',
+    title: 'Thay dầu lần đầu',
+    items: ['Thay dầu động cơ', 'Thay lọc dầu nhớt', 'Kiểm tra mức dầu phanh'],
+    categories: ['dau-dong-co', 'loc-dau-nhot', 'dau-phanh']
+  },
+  {
+    km: '20.000 km',
+    title: 'Vệ sinh hệ thống nạp',
+    items: ['Vệ sinh kim phun, họng hút', 'Kiểm tra lọc gió động cơ', 'Thay dầu động cơ (lần 2)'],
+    categories: ['vs-kim-phun', 'dau-dong-co']
+  },
+  {
+    km: '40.000 km',
+    title: 'Bảo dưỡng hệ truyền động',
+    items: ['Súc rửa động cơ trước khi thay dầu', 'Thay dầu hộp số', 'Thay dầu phanh', 'Kiểm tra nước làm mát'],
+    categories: ['suc-dong-co', 'dau-hop-so', 'dau-phanh', 'nuoc-lam-mat']
+  },
+  {
+    km: '100.000 km',
+    title: 'Đại tu định kỳ',
+    items: ['Thay toàn bộ nước làm mát', 'Vệ sinh kim phun toàn diện', 'Kiểm tra dây curoa, bugi', 'Thay lọc dầu nhớt'],
+    categories: ['nuoc-lam-mat', 'vs-kim-phun', 'loc-dau-nhot']
+  }
+];
+
+const KNOWLEDGE_ARTICLES = [
+  {
+    id: 'chon-nhot',
+    icon: '🛢️',
+    title: 'Cách chọn nhớt động cơ phù hợp với xe',
+    teaser: 'Độ nhớt, tiêu chuẩn API/ILSAC là gì và nên nhìn vào đâu khi chọn dầu nhớt.',
+    categories: ['dau-dong-co'],
+    content: `Khi chọn dầu nhớt động cơ, có 3 yếu tố cần quan tâm:
+
+Độ nhớt (ví dụ 5W-30, 10W-40): hai số thể hiện độ đặc của dầu ở nhiệt độ lạnh và nhiệt độ vận hành. Xe đời mới, động cơ phun xăng trực tiếp thường dùng độ nhớt thấp (0W-20, 5W-30) để tiết kiệm nhiên liệu. Luôn ưu tiên độ nhớt nhà sản xuất xe khuyến nghị trong sách hướng dẫn sử dụng.
+
+Tiêu chuẩn API/ILSAC: các ký hiệu như API SP, ILSAC GF-6 thể hiện dầu đáp ứng tiêu chuẩn bảo vệ động cơ mới nhất, bao gồm khả năng chống kích nổ sớm (LSPI) trên động cơ tăng áp.
+
+Loại dầu: tổng hợp toàn phần bảo vệ tốt nhất và bền nhất, bán tổng hợp là lựa chọn cân bằng giá - hiệu năng, dầu khoáng phù hợp xe đời cũ ít chạy xa.
+
+Nếu không chắc xe mình cần loại nào, cứ nhắn Zalo cho shop kèm tên xe + đời xe, shop sẽ tư vấn đúng loại.`
+  },
+  {
+    id: 'phan-biet-dau',
+    icon: '⚗️',
+    title: 'Dầu tổng hợp, bán tổng hợp, khoáng khác gì nhau?',
+    teaser: 'Ba loại dầu nhớt phổ biến, ưu nhược điểm và nên dùng loại nào.',
+    categories: ['dau-dong-co'],
+    content: `Dầu khoáng (Mineral oil): chiết xuất trực tiếp từ dầu mỏ, giá rẻ nhất nhưng độ bền nhiệt và tuổi thọ thấp hơn, thường cần thay sau 3.000 - 5.000km.
+
+Dầu bán tổng hợp (Semi-synthetic): pha trộn giữa dầu khoáng và dầu tổng hợp, cân bằng giữa giá thành và hiệu năng, chu kỳ thay dầu khoảng 5.000 - 7.000km.
+
+Dầu tổng hợp toàn phần (Full synthetic): được tổng hợp hóa học, chịu nhiệt tốt, giữ độ nhớt ổn định lâu hơn, bảo vệ động cơ tối ưu, chu kỳ thay dầu có thể lên đến 10.000km. Giá cao hơn nhưng tính ra chi phí trên mỗi km thường tương đương hoặc rẻ hơn vì thay ít lần hơn.
+
+Xe đời mới, đi nhiều, hoặc thường xuyên di chuyển trong điều kiện khắc nghiệt (kẹt xe, nắng nóng) nên ưu tiên dầu tổng hợp toàn phần.`
+  },
+  {
+    id: 'dau-hieu-dau-phanh',
+    icon: '🛑',
+    title: 'Dấu hiệu xe cần thay dầu phanh',
+    teaser: 'Phanh nhẹ bồng bềnh, đèn báo phanh sáng... đừng để lâu.',
+    categories: ['dau-phanh'],
+    content: `Dầu phanh (brake fluid) có tính hút ẩm, theo thời gian lượng nước trong dầu tăng lên làm giảm điểm sôi, khiến phanh kém hiệu quả khi vận hành ở nhiệt độ cao. Một số dấu hiệu cho thấy nên kiểm tra hoặc thay dầu phanh:
+
+Bàn đạp phanh cảm giác bồng bềnh, hành trình đạp sâu hơn bình thường.
+Dầu phanh trong bình chứa chuyển màu nâu đục thay vì vàng nhạt/trong.
+Đèn báo hệ thống phanh trên bảng đồng hồ sáng lên.
+Xe đã sử dụng trên 2 năm mà chưa thay dầu phanh lần nào.
+
+Nhà sản xuất thường khuyến nghị thay dầu phanh mỗi 2 năm hoặc 40.000km, tùy điều kiện sử dụng. Đây là hệ thống an toàn nên không nên trì hoãn nếu thấy dấu hiệu bất thường.`
+  },
+  {
+    id: 've-sinh-kim-phun',
+    icon: '🧪',
+    title: 'Vệ sinh kim phun – bao lâu nên làm 1 lần?',
+    teaser: 'Kim phun bẩn ảnh hưởng thế nào đến vận hành và tiêu hao nhiên liệu.',
+    categories: ['vs-kim-phun'],
+    content: `Kim phun (injector) có nhiệm vụ phun nhiên liệu vào buồng đốt với áp lực và độ tơi chính xác. Sau một thời gian sử dụng, cặn carbon từ quá trình đốt cháy bám vào đầu kim phun và họng hút, làm:
+
+Xe rung giật khi nổ máy hoặc tăng tốc.
+Tiêu hao nhiên liệu tăng lên rõ rệt.
+Động cơ khó đề nổ, đặc biệt vào sáng sớm.
+Đèn báo lỗi động cơ (Check Engine) có thể bật sáng.
+
+Với điều kiện vận hành thông thường ở Việt Nam (nhiều bụi, hay kẹt xe, chạy chậm), nên vệ sinh kim phun mỗi 20.000 - 30.000km. Xe thường xuyên đổ xăng ở các trạm không rõ chất lượng nên rút ngắn chu kỳ này.`
+  },
+  {
+    id: 'suc-rua-dong-co',
+    icon: '🔧',
+    title: 'Súc rửa động cơ là gì, có thực sự cần thiết?',
+    teaser: 'Khi nào nên làm, khi nào không cần, tránh tốn tiền oan.',
+    categories: ['suc-dong-co'],
+    content: `Súc rửa động cơ (engine flush) là dùng dung dịch chuyên dụng bơm vào hệ thống bôi trơn, chạy không tải vài phút để làm sạch cặn bùn, mạt kim loại bám trong động cơ trước khi thay dầu mới. Dung dịch sẽ được xả ra cùng dầu cũ.
+
+Nên làm khi: xe đã lâu không thay dầu đúng hạn, từng dùng dầu kém chất lượng, hoặc mới mua xe cũ không rõ lịch sử bảo dưỡng.
+
+Không bắt buộc khi: xe luôn được thay dầu đúng định kỳ bằng dầu chất lượng tốt — trường hợp này súc rửa thường xuyên là không cần thiết, thậm chí làm hao mòn thêm các gioăng phớt cũ.
+
+Tần suất hợp lý cho xe bảo dưỡng đều đặn là khoảng mỗi 2-3 lần thay dầu thì súc rửa một lần, không cần làm ở mọi lần thay dầu.`
+  },
+  {
+    id: 'nuoc-lam-mat',
+    icon: '❄️',
+    title: 'Vì sao phải thay nước làm mát đúng hạn?',
+    teaser: 'Nước làm mát hết tác dụng có thể khiến máy quá nhiệt, hư hỏng nặng.',
+    categories: ['nuoc-lam-mat'],
+    content: `Nước làm mát (coolant) không chỉ giúp giải nhiệt động cơ mà còn chứa các chất chống đông, chống gỉ sét và bảo vệ các chi tiết kim loại, cao su trong hệ thống. Theo thời gian, các chất phụ gia này suy giảm, khiến nước làm mát mất khả năng bảo vệ dù bề ngoài nhìn vẫn còn nước trong bình.
+
+Hậu quả khi dùng nước làm mát quá hạn: hệ thống dễ bị ăn mòn, đóng cặn trong két nước và đường ống, giảm hiệu quả giải nhiệt, nguy cơ động cơ quá nhiệt (overheating) — một trong những nguyên nhân gây hư hỏng động cơ nghiêm trọng và tốn kém nhất.
+
+Nên kiểm tra mức và chất lượng nước làm mát mỗi lần bảo dưỡng định kỳ, và thay mới theo khuyến nghị của nhà sản xuất, thường khoảng 40.000 - 100.000km tùy loại nước làm mát đang dùng.`
+  },
+  {
+    id: 'dau-hop-so',
+    icon: '⚙️',
+    title: 'Dầu hộp số tự động – dấu hiệu cần thay',
+    teaser: 'Vào số giật, trễ số... có thể do dầu hộp số đã xuống cấp.',
+    categories: ['dau-hop-so'],
+    content: `Dầu hộp số tự động (ATF) giúp truyền lực, bôi trơn và làm mát các bộ phận bên trong hộp số. Khác với dầu động cơ, dầu hộp số thường có chu kỳ thay dài hơn nhưng không có nghĩa là không bao giờ cần thay. Một số dấu hiệu cho thấy nên kiểm tra:
+
+Cảm giác giật cục hoặc trễ khi sang số.
+Hộp số phát ra tiếng ồn lạ khi vận hành.
+Dầu hộp số khi kiểm tra có màu nâu đen hoặc mùi khét, khác với màu đỏ/hồng trong suốt ban đầu.
+Đèn báo lỗi hộp số sáng trên bảng đồng hồ.
+
+Hầu hết nhà sản xuất khuyến nghị thay dầu hộp số tự động mỗi 40.000 - 60.000km, một số dòng xe có thể dài hơn. Nên kiểm tra trong sổ tay bảo dưỡng xe của bạn để biết mốc chính xác.`
+  }
+];
+
 function formatPrice(n){ return n.toLocaleString('vi-VN') + 'đ'; }
 function buildZaloLink(zalo, name){ return `https://zalo.me/${zalo}?text=${encodeURIComponent('Chào shop, tôi muốn đặt: ' + name)}`; }
 
@@ -3213,9 +3418,71 @@ function renderGrid(){
 
 function render(){ renderFilters(); renderGrid(); }
 
+function goToCategory(catId){
+  activeCategory = catId;
+  activeBrand = null;
+  render();
+  document.getElementById('catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderMaintenance(){
+  const track = document.getElementById('milestone-track');
+  track.innerHTML = MAINTENANCE_SCHEDULE.map(m => `
+    <div class="milestone-card">
+      <div class="milestone-title">${m.title}</div>
+      <div class="milestone-km">${m.km}</div>
+      <ul class="milestone-list">${m.items.map(it => `<li>${it}</li>`).join('')}</ul>
+      <div class="milestone-actions">
+        ${m.categories.map(cid => {
+          const cat = SHOP_DATA.categories.find(c => c.id === cid);
+          return cat ? `<button class="tag-btn" onclick="goToCategory('${cid}')">${cat.label} →</button>` : '';
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderKnowledge(){
+  const grid = document.getElementById('knowledge-grid');
+  grid.innerHTML = KNOWLEDGE_ARTICLES.map(a => `
+    <div class="knowledge-card" onclick="openArticleModal('${a.id}')">
+      <div class="knowledge-icon">${a.icon}</div>
+      <div class="knowledge-title">${a.title}</div>
+      <div class="knowledge-teaser">${a.teaser}</div>
+      <div class="knowledge-readmore">Đọc thêm →</div>
+    </div>
+  `).join('');
+}
+
+function openArticleModal(articleId){
+  const a = KNOWLEDGE_ARTICLES.find(x => x.id === articleId);
+  if(!a) return;
+  document.getElementById('article-modal-cat').textContent = 'Kiến thức xe';
+  document.getElementById('article-modal-title').textContent = a.title;
+  document.getElementById('article-modal-content').textContent = a.content;
+  document.getElementById('article-modal-actions').innerHTML = (a.categories || []).map(cid => {
+    const cat = SHOP_DATA.categories.find(c => c.id === cid);
+    return cat ? `<button class="tag-btn" onclick="closeArticleModalDirect();goToCategory('${cid}')">Xem ${cat.label} →</button>` : '';
+  }).join('');
+  document.getElementById('article-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeArticleModal(e){
+  if(e.target.id === 'article-modal-overlay') closeArticleModalDirect();
+}
+
+function closeArticleModalDirect(){
+  document.getElementById('article-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
 document.getElementById('stat-products').textContent = SHOP_DATA.products.length;
 document.getElementById('search').addEventListener('input', e => { searchTerm = e.target.value; renderGrid(); });
 render();
+renderMaintenance();
+renderKnowledge();
 
 function openModal(productId){
   const p = SHOP_DATA.products.find(x => x.id === productId);
@@ -3285,7 +3552,7 @@ function closeModalDirect(){
 }
 
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') closeModalDirect();
+  if(e.key === 'Escape'){ closeModalDirect(); closeArticleModalDirect(); }
 });
 
 </script>
