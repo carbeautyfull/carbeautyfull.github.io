@@ -61,35 +61,379 @@
     },
     {
       "id": "dau-dong-co",
-      "label": "Dầu động cơ"
+      "label": "Dầu động cơ",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     },
     {
       "id": "dau-hop-so",
-      "label": "Dầu hộp số"
+      "label": "Dầu hộp số",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     },
     {
       "id": "nuoc-lam-mat",
-      "label": "Nước làm mát"
+      "label": "Nước làm mát",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     },
     {
       "id": "dau-phanh",
-      "label": "Dầu phanh"
+      "label": "Dầu phanh",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     },
     {
       "id": "vs-kim-phun",
-      "label": "DD vệ sinh kim phun"
+      "label": "DD vệ sinh kim phun",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     },
     {
       "id": "suc-dong-co",
-      "label": "DD súc rửa động cơ"
+      "label": "DD súc rửa động cơ",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     },
     {
       "id": "loc-dau-nhot",
-      "label": "Lọc dầu nhớt"
+      "label": "Lọc dầu nhớt",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     },
     {
       "id": "dd-khac",
-      "label": "Dung dịch khác"
+      "label": "Dung dịch khác",
+      "hasSub": true,
+      "sub": [
+        {
+          "id": "toyota",
+          "label": "Toyota"
+        },
+        {
+          "id": "ford",
+          "label": "Ford"
+        },
+        {
+          "id": "mazda",
+          "label": "Mazda"
+        },
+        {
+          "id": "honda",
+          "label": "Honda"
+        },
+        {
+          "id": "hyundai",
+          "label": "Hyundai"
+        },
+        {
+          "id": "mitsubishi",
+          "label": "Mitsubishi"
+        },
+        {
+          "id": "kia",
+          "label": "Kia"
+        },
+        {
+          "id": "suzuki",
+          "label": "Suzuki"
+        },
+        {
+          "id": "vinfast",
+          "label": "VinFast"
+        },
+        {
+          "id": "khac-xe",
+          "label": "Hãng khác"
+        }
+      ]
     }
   ],
   "products": [
